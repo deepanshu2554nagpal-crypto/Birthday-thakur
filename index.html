@@ -1360,9 +1360,9 @@
     </style>
 </head>
 
-<body class="locked">
+<body class="locked countdown-mode">
 
-    <div class="countdown-screen hidden" id="countdown-screen" style="display: none;">
+    <div class="countdown-screen" id="countdown-screen">
         <div class="countdown-card">
             <div class="countdown-badge">Coming Soon</div>
             <h1 class="countdown-title">The Surprise Opens Soon</h1>
@@ -1628,7 +1628,7 @@
     </div>
 
     <script>
-        const DEV_MODE = true;
+        const DEV_MODE = false;
         const SITE_PASSWORD = atob("amlnczI4OTk=");
         const RELEASE_TIME = new Date("2026-05-19T00:00:00+05:30");
         let countdownIntervalId = null;
