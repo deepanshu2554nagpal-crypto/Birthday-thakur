@@ -4,7 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Cinematic Birthday Surprise | For Someone Special</title>
+    <title>Birthday Surprise Countdown</title>
+    <meta name="description" content="A private birthday surprise is locked until 19 May 2026.">
+    <meta name="robots" content="noindex, noarchive, nosnippet, noimageindex">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jigyasa-pandey.vercel.app/">
+    <meta property="og:title" content="Birthday Surprise Countdown">
+    <meta property="og:description" content="A private birthday surprise is locked until 19 May 2026.">
+    <meta property="og:site_name" content="Birthday Surprise Countdown">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Birthday Surprise Countdown">
+    <meta name="twitter:description" content="A private birthday surprise is locked until 19 May 2026.">
     <!-- High-End Typography -->
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,900&display=swap"
@@ -1640,6 +1650,7 @@
         function releaseCountdownGate() {
             const countdownScreen = document.getElementById('countdown-screen');
             const passwordInput = document.getElementById('password-input');
+            document.title = 'A Cinematic Birthday Surprise | For Jigyasa';
             document.body.classList.remove('countdown-mode');
             countdownScreen.classList.add('hidden');
             setTimeout(() => {
