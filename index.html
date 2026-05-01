@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -828,13 +827,17 @@
             }
         }
 
-        /* --- MEMORY GALLERY FIXES --- */
+        /* --- MEMORY GALLERY --- */
         #gallery-page {
-            background: #050505;
+            background:
+                radial-gradient(circle at top left, rgba(255, 45, 85, 0.16), transparent 34%),
+                radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.1), transparent 30%),
+                #050505;
             overflow-y: auto;
             display: block;
-            padding: 100px 20px;
+            padding: 90px 20px 70px;
             position: relative;
+            scroll-behavior: smooth;
         }
 
         .gallery-title {
@@ -842,13 +845,13 @@
             font-size: clamp(2.5rem, 6vw, 4rem);
             color: var(--accent);
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 16px;
             text-shadow: 0 0 20px var(--accent-glow);
         }
 
         .gallery-intro {
             max-width: 680px;
-            margin: 0 auto 50px;
+            margin: 0 auto 42px;
             text-align: center;
             color: rgba(255, 255, 255, 0.66);
             line-height: 1.8;
@@ -856,22 +859,25 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: clamp(16px, 2.4vw, 28px);
+            max-width: 1180px;
             margin: 0 auto;
+            align-items: stretch;
         }
 
         .memory-card {
             position: relative;
-            height: 400px;
-            border-radius: 20px;
+            min-height: 0;
+            aspect-ratio: 4 / 5;
+            border-radius: 18px;
             overflow: hidden;
             background: var(--glass);
             border: 1px solid var(--glass-border);
             cursor: pointer;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s;
+            transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.45s, border-color 0.45s;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            isolation: isolate;
         }
 
         .memory-card::after {
@@ -910,20 +916,22 @@
         }
 
         .memory-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 20px 50px var(--accent-glow);
-            border-color: var(--accent);
+            transform: translateY(-10px) scale(1.015);
+            box-shadow: 0 22px 55px rgba(255, 45, 85, 0.34);
+            border-color: rgba(255, 45, 85, 0.8);
         }
 
         .memory-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s ease;
+            transition: transform 0.8s ease, filter 0.5s ease;
+            display: block;
         }
 
         .memory-card:hover .memory-image {
-            transform: scale(1.1);
+            transform: scale(1.07);
+            filter: saturate(1.08) contrast(1.02);
         }
 
         .memory-hover-overlay {
@@ -959,6 +967,111 @@
 
         .memory-card:hover .hover-message {
             transform: translateY(0);
+        }
+
+        .photo-viewer {
+            position: fixed;
+            inset: 0;
+            z-index: 12000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 22px;
+            background: rgba(0, 0, 0, 0.86);
+            backdrop-filter: blur(14px);
+        }
+
+        .photo-viewer.active {
+            display: flex;
+        }
+
+        .photo-viewer-frame {
+            position: relative;
+            width: min(92vw, 980px);
+            height: min(82vh, 760px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-viewer-image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 18px;
+            object-fit: contain;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+            animation: photoViewerIn 0.28s ease;
+        }
+
+        .photo-viewer-caption {
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            transform: translateX(-50%);
+            width: min(88vw, 620px);
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: rgba(10, 10, 11, 0.58);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            color: rgba(255, 255, 255, 0.86);
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .photo-viewer-btn {
+            position: absolute;
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .photo-viewer-btn:hover {
+            transform: scale(1.08);
+            background: rgba(255, 45, 85, 0.62);
+        }
+
+        .photo-viewer-close {
+            top: 18px;
+            right: 18px;
+        }
+
+        .photo-viewer-prev {
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .photo-viewer-next {
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .photo-viewer-prev:hover,
+        .photo-viewer-next:hover {
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        @keyframes photoViewerIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* Sparkle over gallery */
@@ -1062,6 +1175,22 @@
 
             .gallery-grid {
                 gap: 20px;
+                grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            }
+
+            .photo-viewer {
+                padding: 14px;
+            }
+
+            .photo-viewer-frame {
+                width: 100%;
+                height: 78vh;
+            }
+
+            .photo-viewer-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
             }
         }
 
@@ -1154,10 +1283,13 @@
 
             .gallery-grid {
                 grid-template-columns: 1fr;
+                gap: 18px;
             }
 
             .memory-card {
-                height: 320px;
+                aspect-ratio: 3 / 4;
+                height: auto;
+                border-radius: 16px;
             }
 
             .memory-caption {
@@ -1179,6 +1311,38 @@
                 font-size: 1.35rem;
                 transform: none;
             }
+
+            .photo-viewer {
+                padding: 12px;
+            }
+
+            .photo-viewer-frame {
+                height: 76vh;
+                align-items: center;
+            }
+
+            .photo-viewer-image {
+                border-radius: 14px;
+            }
+
+            .photo-viewer-caption {
+                bottom: -44px;
+                border-radius: 16px;
+                font-size: 0.82rem;
+            }
+
+            .photo-viewer-close {
+                top: 12px;
+                right: 12px;
+            }
+
+            .photo-viewer-prev {
+                left: 12px;
+            }
+
+            .photo-viewer-next {
+                right: 12px;
+            }
         }
 
         @media (hover: none) and (pointer: coarse) {
@@ -1196,9 +1360,9 @@
     </style>
 </head>
 
-<body class="locked countdown-mode">
+<body class="locked">
 
-    <div class="countdown-screen" id="countdown-screen">
+    <div class="countdown-screen hidden" id="countdown-screen" style="display: none;">
         <div class="countdown-card">
             <div class="countdown-badge">Coming Soon</div>
             <h1 class="countdown-title">The Surprise Opens Soon</h1>
@@ -1299,10 +1463,11 @@
                     <div class="message-kicker">A Note For You</div>
                     <h2 class="message-title">My Dearest Jigyasa,</h2>
                     <p class="message-body">
-                        Today isn't just a date on the calendar; it's a celebration of the light you bring into my life.
-                        Every moment with you is like a frame from a beautiful movie, and I'm so lucky to be your
-                        co-star.
-                        May this year be filled with as much magic as you give to everyone around you.
+                        Today is a small celebration for someone who genuinely deserves a happy and beautiful day.
+                        I hope this little surprise brings a smile to your face and makes your birthday feel a bit more
+                        special.
+                        May this year bring you happiness, confidence, good memories, and everything you have been
+                        wishing for.
                     </p>
                     <p class="message-signoff">With love, Rohit</p>
                     <button class="btn-neon" style="margin-top: 40px; animation: none;"
@@ -1320,66 +1485,126 @@
         </div>
 
         <h2 class="gallery-title">Moments in Time</h2>
-        <p class="gallery-intro">Small frames, big feelings. Hover through these little scenes and let the gallery feel more like a keepsake than a plain image list.</p>
+        <p class="gallery-intro">Small frames, big feelings. A soft little gallery made to feel calm, polished, and easy to enjoy on any screen.</p>
         <div class="gallery-grid">
             <!-- Memory 1 -->
-            <div class="memory-card">
+            <div class="memory-card" data-index="0" role="button" tabindex="0">
                 <div class="memory-tag">Golden Hour</div>
                 <div class="memory-caption">A soft beginning</div>
-                <img src="./photo_6224129420272798834_y.jpg" alt="Memory"
+                <img src="./photo_6224129420272798834_y.jpg" alt="Memory" loading="lazy" decoding="async"
                     class="memory-image">
                 <div class="memory-hover-overlay">
                     <p class="hover-message">Cute, calm, and genuinely sweet in your own way.</p>
                 </div>
             </div>
             <!-- Memory 2 -->
-            <div class="memory-card">
+            <div class="memory-card" data-index="1" role="button" tabindex="0">
                 <div class="memory-tag">Glow</div>
                 <div class="memory-caption">The easy sparkle</div>
-                <img src="./photo_6224129420272798835_y.jpg" alt="Memory"
+                <img src="./photo_6224129420272798835_y.jpg" alt="Memory" loading="lazy" decoding="async"
                     class="memory-image">
                 <div class="memory-hover-overlay">
                     <p class="hover-message">Even online, your vibe feels warm and easy to like.</p>
                 </div>
             </div>
             <!-- Memory 3 -->
-            <div class="memory-card">
+            <div class="memory-card" data-index="2" role="button" tabindex="0">
                 <div class="memory-tag">Favorite Smile</div>
                 <div class="memory-caption">The one I remember</div>
-                <img src="./photo_6224129420272798836_y.jpg" alt="Memory"
+                <img src="./photo_6224129420272798836_y.jpg" alt="Memory" loading="lazy" decoding="async"
                     class="memory-image">
                 <div class="memory-hover-overlay">
                     <p class="hover-message">That soft smile and 5.4, 5.5 energy just suit you well.</p>
                 </div>
             </div>
             <!-- Memory 4 -->
-            <div class="memory-card">
+            <div class="memory-card" data-index="3" role="button" tabindex="0">
                 <div class="memory-tag">Little Gift</div>
                 <div class="memory-caption">Every moment counts</div>
-                <img src="./photo_6224129420272798837_y.jpg" alt="Memory"
+                <img src="./photo_6224129420272798837_y.jpg" alt="Memory" loading="lazy" decoding="async"
                     class="memory-image">
                 <div class="memory-hover-overlay">
                     <p class="hover-message">A little short-tempered, but still very nice at heart.</p>
                 </div>
             </div>
             <!-- Memory 5 -->
-            <div class="memory-card">
+            <div class="memory-card" data-index="4" role="button" tabindex="0">
                 <div class="memory-tag">Adventure</div>
                 <div class="memory-caption">More stories ahead</div>
-                <img src="./photo_6224129420272798838_y.jpg" alt="Memory"
+                <img src="./photo_6224129420272798838_y.jpg" alt="Memory" loading="lazy" decoding="async"
                     class="memory-image">
                 <div class="memory-hover-overlay">
                     <p class="hover-message">We have not met yet, but the comfort still feels real.</p>
                 </div>
             </div>
             <!-- Memory 6 -->
-            <div class="memory-card">
+            <div class="memory-card" data-index="5" role="button" tabindex="0">
                 <div class="memory-tag">Forever</div>
                 <div class="memory-caption">The feeling stays</div>
-                <img src="./photo_6224129420272798839_y.jpg" alt="Memory"
+                <img src="./photo_6224129420272798839_y.jpg" alt="Memory" loading="lazy" decoding="async"
                     class="memory-image">
                 <div class="memory-hover-overlay">
                     <p class="hover-message">Overall, just a really good, cute, and memorable person.</p>
+                </div>
+            </div>
+            <!-- Memory 7 -->
+            <div class="memory-card" data-index="6" role="button" tabindex="0">
+                <div class="memory-tag">Bright Mood</div>
+                <div class="memory-caption">Simple and sweet</div>
+                <img src="./photo_6224129420272798840_y.jpg" alt="Memory" loading="lazy" decoding="async"
+                    class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">A photo that keeps the whole page feeling light and happy.</p>
+                </div>
+            </div>
+            <!-- Memory 8 -->
+            <div class="memory-card" data-index="7" role="button" tabindex="0">
+                <div class="memory-tag">Soft Frame</div>
+                <div class="memory-caption">A quiet favorite</div>
+                <img src="./photo_6224129420272798841_y.jpg" alt="Memory" loading="lazy" decoding="async"
+                    class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">Some pictures just feel peaceful without trying too hard.</p>
+                </div>
+            </div>
+            <!-- Memory 9 -->
+            <div class="memory-card" data-index="8" role="button" tabindex="0">
+                <div class="memory-tag">Little Smile</div>
+                <div class="memory-caption">A birthday detail</div>
+                <img src="./photo_6224129420272798842_y.jpg" alt="Memory" loading="lazy" decoding="async"
+                    class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">The kind of picture that makes the surprise feel personal.</p>
+                </div>
+            </div>
+            <!-- Memory 10 -->
+            <div class="memory-card" data-index="9" role="button" tabindex="0">
+                <div class="memory-tag">Keepsake</div>
+                <div class="memory-caption">One more memory</div>
+                <img src="./photo_6224129420272798843_y.jpg" alt="Memory" loading="lazy" decoding="async"
+                    class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">A  frame for a birthday page made with care.</p>
+                </div>
+            </div>
+            <!-- Memory 11 -->
+            <div class="memory-card" data-index="10" role="button" tabindex="0">
+                <div class="memory-tag">Screenshot</div>
+                <div class="memory-caption">A saved moment</div>
+                <img src="./Screenshot 2026-05-01 211515.png" alt="Memory" loading="lazy" decoding="async"
+                    class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">A little captured moment added to the birthday story.</p>
+                </div>
+            </div>
+            <!-- Memory 12 -->
+            <div class="memory-card" data-index="11" role="button" tabindex="0">
+                <div class="memory-tag">Screenshot</div>
+                <div class="memory-caption">Another saved frame</div>
+                <img src="./Screenshot 2026-05-01 211545.png" alt="Memory" loading="lazy" decoding="async"
+                    class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">One more frame photo to complete the collection.</p>
                 </div>
             </div>
         </div>
@@ -1388,14 +1613,22 @@
         </div>
     </section>
 
-    <audio id="birthday-audio" loop>
-        <source src="/song/Jhol Ringtone Download Female Voice.mp3" type="audio/mpeg">
-    </audio>
+    <div class="photo-viewer" id="photo-viewer" aria-hidden="true">
+        <button class="photo-viewer-btn photo-viewer-close" type="button" aria-label="Close" onclick="closeMemoryViewer()">x</button>
+        <button class="photo-viewer-btn photo-viewer-prev" type="button" aria-label="Previous photo" onclick="navigateMemory(-1)">&lsaquo;</button>
+        <div class="photo-viewer-frame">
+            <img class="photo-viewer-image" id="photo-viewer-image" src="" alt="Selected memory">
+            <p class="photo-viewer-caption" id="photo-viewer-caption"></p>
+        </div>
+        <button class="photo-viewer-btn photo-viewer-next" type="button" aria-label="Next photo" onclick="navigateMemory(1)">&rsaquo;</button>
+    </div>
+
+    <audio id="birthday-audio" src="./birthday-song.mp3" loop preload="auto"></audio>
 
     </div>
 
     <script>
-        const DEV_MODE = false;
+        const DEV_MODE = true;
         const SITE_PASSWORD = atob("amlnczI4OTk=");
         const RELEASE_TIME = new Date("2026-05-19T00:00:00+05:30");
         let countdownIntervalId = null;
@@ -1545,6 +1778,18 @@
             transitionTo('celebration-page');
         }
 
+        function playBirthdayAudio() {
+            const audio = document.getElementById('birthday-audio');
+            audio.loop = true;
+            audio.volume = 1;
+
+            if (audio.ended) {
+                audio.currentTime = 0;
+            }
+
+            audio.play().catch(() => { });
+        }
+
         // --- Celebration Flow ---
         let celebStep = 1;
         function celebFlow() {
@@ -1560,8 +1805,7 @@
                 btn.innerText = "Play Music";
                 celebStep = 2;
             } else if (celebStep === 2) {
-                const audio = document.getElementById('birthday-audio');
-                audio.play().catch(() => { });
+                playBirthdayAudio();
                 hint.innerText = "Let the colors fly!";
                 btn.innerText = "Fly Balloons";
                 celebStep = 3;
@@ -1623,6 +1867,113 @@
             }, 200);
         }
 
+        const memoryPhotos = [
+            {
+                src: './photo_6224129420272798834_y.jpg',
+                caption: 'Cute, calm, and genuinely sweet in your own way.'
+            },
+            {
+                src: './photo_6224129420272798835_y.jpg',
+                caption: 'Even online, your vibe feels warm and easy to like.'
+            },
+            {
+                src: './photo_6224129420272798836_y.jpg',
+                caption: 'That soft smile and 5.4, 5.5 energy just suit you well.'
+            },
+            {
+                src: './photo_6224129420272798837_y.jpg',
+                caption: 'A little short-tempered, but still very nice at heart.'
+            },
+            {
+                src: './photo_6224129420272798838_y.jpg',
+                caption: 'We have not met yet, but the comfort still feels real.'
+            },
+            {
+                src: './photo_6224129420272798839_y.jpg',
+                caption: 'Overall, just a really good, cute, and memorable person.'
+            },
+            {
+                src: './photo_6224129420272798840_y.jpg',
+                caption: 'A photo that keeps the whole page feeling light and happy.'
+            },
+            {
+                src: './photo_6224129420272798841_y.jpg',
+                caption: 'Some pictures just feel peaceful without trying too hard.'
+            },
+            {
+                src: './photo_6224129420272798842_y.jpg',
+                caption: 'The kind of picture that makes the surprise feel personal.'
+            },
+            {
+                src: './photo_6224129420272798843_y.jpg',
+                caption: 'A final frame for a birthday page made with care.'
+            },
+            {
+                src: './Screenshot 2026-05-01 211515.png',
+                caption: 'A little captured moment added to the birthday story.'
+            },
+            {
+                src: './Screenshot 2026-05-01 211545.png',
+                caption: 'One more screenshot to complete the collection.'
+            }
+        ];
+        let activeMemoryIndex = 0;
+
+        function openMemoryViewer(index) {
+            const viewer = document.getElementById('photo-viewer');
+            const image = document.getElementById('photo-viewer-image');
+            const caption = document.getElementById('photo-viewer-caption');
+            activeMemoryIndex = index;
+            image.src = memoryPhotos[activeMemoryIndex].src;
+            caption.innerText = memoryPhotos[activeMemoryIndex].caption;
+            viewer.classList.add('active');
+            viewer.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeMemoryViewer() {
+            const viewer = document.getElementById('photo-viewer');
+            viewer.classList.remove('active');
+            viewer.setAttribute('aria-hidden', 'true');
+        }
+
+        function navigateMemory(direction) {
+            activeMemoryIndex = (activeMemoryIndex + direction + memoryPhotos.length) % memoryPhotos.length;
+            openMemoryViewer(activeMemoryIndex);
+        }
+
+        function initMemoryGallery() {
+            document.querySelectorAll('.memory-card').forEach((card) => {
+                const index = Number(card.dataset.index);
+                card.addEventListener('click', () => openMemoryViewer(index));
+                card.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openMemoryViewer(index);
+                    }
+                });
+            });
+
+            document.getElementById('photo-viewer').addEventListener('click', (event) => {
+                if (event.target.id === 'photo-viewer') {
+                    closeMemoryViewer();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (!document.getElementById('photo-viewer').classList.contains('active')) {
+                    return;
+                }
+
+                if (event.key === 'Escape') {
+                    closeMemoryViewer();
+                } else if (event.key === 'ArrowLeft') {
+                    navigateMemory(-1);
+                } else if (event.key === 'ArrowRight') {
+                    navigateMemory(1);
+                }
+            });
+        }
+
         function startSparkles(targetId) {
             const card = document.getElementById(targetId);
             setInterval(() => {
@@ -1657,8 +2008,10 @@
             initCountdownGate();
             initLockScreen();
             initFairyLights();
+            initMemoryGallery();
+            document.getElementById('birthday-audio').addEventListener('ended', playBirthdayAudio);
         };
-    </script>
+    </script>   
 </body>
 
 </html>
