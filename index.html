@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise Countdown</title>
-    <meta name="description" content="A private birthday surprise is locked until 19 May 2026.">
+    <title>A Cinematic Birthday Surprise | For Jigyasa</title>
+    <meta name="description" content="A private birthday surprise for Jigyasa.">
     <meta name="robots" content="noindex, noarchive, nosnippet, noimageindex">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jigyasa-pandey.vercel.app/">
-    <meta property="og:title" content="Birthday Surprise Countdown">
-    <meta property="og:description" content="A private birthday surprise is locked until 19 May 2026.">
-    <meta property="og:site_name" content="Birthday Surprise Countdown">
+    <meta property="og:title" content="A Cinematic Birthday Surprise | For Jigyasa">
+    <meta property="og:description" content="A private birthday surprise for Jigyasa.">
+    <meta property="og:site_name" content="A Cinematic Birthday Surprise">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Birthday Surprise Countdown">
-    <meta name="twitter:description" content="A private birthday surprise is locked until 19 May 2026.">
+    <meta name="twitter:title" content="A Cinematic Birthday Surprise | For Jigyasa">
+    <meta name="twitter:description" content="A private birthday surprise for Jigyasa.">
     <!-- High-End Typography -->
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,900&display=swap"
@@ -62,10 +62,6 @@
             overflow: hidden;
         }
 
-        body.countdown-mode {
-            overflow: hidden;
-        }
-
         body.viewer-open {
             overflow: hidden;
             touch-action: none;
@@ -75,8 +71,7 @@
             transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
         }
 
-        body.locked #site-content,
-        body.countdown-mode #site-content {
+        body.locked #site-content {
             opacity: 0;
             pointer-events: none;
             transform: scale(1.02);
@@ -108,102 +103,6 @@
         .lock-screen.hidden {
             opacity: 0;
             visibility: hidden;
-        }
-
-        .countdown-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            background:
-                radial-gradient(circle at top, rgba(255, 45, 85, 0.15), transparent 34%),
-                radial-gradient(circle at bottom, rgba(255, 255, 255, 0.05), transparent 28%),
-                linear-gradient(135deg, #040405 0%, #16070c 48%, #040405 100%);
-            transition: opacity 0.65s ease, visibility 0.65s ease;
-        }
-
-        .countdown-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .countdown-card {
-            width: min(94vw, 760px);
-            padding: 38px 30px;
-            border-radius: 32px;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 45, 85, 0.06));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.46);
-            backdrop-filter: blur(18px);
-            text-align: center;
-            animation: lockCardIn 0.65s ease;
-        }
-
-        .countdown-badge {
-            display: inline-block;
-            margin-bottom: 18px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.72rem;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.72);
-        }
-
-        .countdown-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 7vw, 4rem);
-            font-style: italic;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .countdown-copy {
-            max-width: 38ch;
-            margin: 0 auto 28px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.68);
-        }
-
-        .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .countdown-unit {
-            padding: 20px 12px;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-        }
-
-        .countdown-number {
-            display: block;
-            font-size: clamp(1.9rem, 5vw, 3rem);
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .countdown-label {
-            font-size: 0.76rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .countdown-release {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.88rem;
-            letter-spacing: 0.08em;
         }
 
         .lock-card {
@@ -1153,16 +1052,11 @@
                 letter-spacing: 0.12em;
             }
 
-            .countdown-card,
             .lock-card,
             .slider-card,
             .celebration-card,
             .message-card {
                 width: min(100%, 560px);
-            }
-
-            .countdown-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .slider-card {
@@ -1233,23 +1127,19 @@
         }
 
         @media (max-width: 600px) {
-            .lock-screen,
-            .countdown-screen {
+            .lock-screen {
                 padding: 16px;
             }
 
-            .countdown-card,
             .lock-card {
                 padding: 28px 18px;
                 border-radius: 24px;
             }
 
-            .countdown-title,
             .lock-title {
                 font-size: clamp(1.8rem, 9vw, 2.5rem);
             }
 
-            .countdown-copy,
             .lock-copy,
             .celebration-copy,
             .message-body {
@@ -1257,16 +1147,6 @@
                 line-height: 1.7;
             }
 
-            .countdown-grid {
-                gap: 12px;
-            }
-
-            .countdown-number {
-                font-size: 1.8rem;
-            }
-
-            .countdown-label,
-            .countdown-release,
             .slider-progress,
             .celebration-badge,
             .message-kicker,
@@ -1402,11 +1282,6 @@
         }
 
         @media (max-width: 420px) {
-            .countdown-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .countdown-card,
             .lock-card,
             .slider-card,
             .celebration-card,
@@ -1443,20 +1318,14 @@
 
         @media (max-width: 360px) {
             .lock-screen,
-            .countdown-screen,
             #gallery-page {
                 padding-left: 12px;
                 padding-right: 12px;
             }
 
-            .countdown-title,
             .lock-title,
             .message-title {
                 font-size: clamp(1.6rem, 9vw, 2.2rem);
-            }
-
-            .countdown-number {
-                font-size: 1.5rem;
             }
         }
 
@@ -1475,12 +1344,8 @@
     </style>
 </head>
 
-<body class="locked countdown-mode">
+<body class="locked">
 
-    <div class="countdown-screen" id="countdown-screen">
-        <div class="countdown-card">
-            <div class="countdown-badge">Coming Soon</div>
-            <h1 class="countdown-title">The Surprise Opens Soon</h1>
             <p class="countdown-copy">A little patience, Jigyasa 🙃. Your surprise unlocks when the countdown ends.</p>
             <div class="countdown-grid">
                 <div class="countdown-unit">
