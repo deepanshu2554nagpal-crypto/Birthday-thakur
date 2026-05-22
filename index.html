@@ -1346,29 +1346,6 @@
 
 <body class="locked">
 
-            <p class="countdown-copy">A little patience, Jigyasa 🙃. Your surprise unlocks when the countdown ends.</p>
-            <div class="countdown-grid">
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="days-value">00</span>
-                    <span class="countdown-label">Days</span>
-                </div>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="hours-value">00</span>
-                    <span class="countdown-label">Hours</span>
-                </div>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="minutes-value">00</span>
-                    <span class="countdown-label">Minutes</span>
-                </div>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="seconds-value">00</span>
-                    <span class="countdown-label">Seconds</span>
-                </div>
-            </div>
-            <p class="countdown-release">Releases on 19 May 2026, 12:00 AM IST</p>
-        </div>
-    </div>
-
     <div class="lock-screen" id="lock-screen">
         <div class="lock-card">
             <div class="lock-badge">Private Access</div>
@@ -1608,69 +1585,7 @@
     </div>
 
     <script>
-        const DEV_MODE = false;
         const SITE_PASSWORD = atob("amlnczI4OTk=");
-        const RELEASE_TIME = new Date("2026-05-19T00:00:00+05:30");
-        let countdownIntervalId = null;
-
-        function padCountdown(value) {
-            return String(value).padStart(2, '0');
-        }
-
-        function releaseCountdownGate() {
-            const countdownScreen = document.getElementById('countdown-screen');
-            const passwordInput = document.getElementById('password-input');
-            document.title = 'A Cinematic Birthday Surprise | For Jigyasa';
-            document.body.classList.remove('countdown-mode');
-            countdownScreen.classList.add('hidden');
-            setTimeout(() => {
-                countdownScreen.style.display = 'none';
-                passwordInput.focus();
-            }, 700);
-        }
-
-        function updateCountdown() {
-            const now = new Date();
-            const diff = RELEASE_TIME.getTime() - now.getTime();
-
-            if (diff <= 0) {
-                if (countdownIntervalId) {
-                    clearInterval(countdownIntervalId);
-                }
-                document.getElementById('days-value').innerText = '00';
-                document.getElementById('hours-value').innerText = '00';
-                document.getElementById('minutes-value').innerText = '00';
-                document.getElementById('seconds-value').innerText = '00';
-                releaseCountdownGate();
-                return;
-            }
-
-            const totalSeconds = Math.floor(diff / 1000);
-            const days = Math.floor(totalSeconds / 86400);
-            const hours = Math.floor((totalSeconds % 86400) / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
-            document.getElementById('days-value').innerText = padCountdown(days);
-            document.getElementById('hours-value').innerText = padCountdown(hours);
-            document.getElementById('minutes-value').innerText = padCountdown(minutes);
-            document.getElementById('seconds-value').innerText = padCountdown(seconds);
-        }
-
-        function initCountdownGate() {
-            if (DEV_MODE) {
-                releaseCountdownGate();
-                return;
-            }
-
-            if (new Date().getTime() >= RELEASE_TIME.getTime()) {
-                releaseCountdownGate();
-                return;
-            }
-
-            updateCountdown();
-            countdownIntervalId = setInterval(updateCountdown, 1000);
-        }
 
         function unlockSite() {
             const input = document.getElementById('password-input');
@@ -1699,9 +1614,7 @@
             const input = document.getElementById('password-input');
             const button = document.getElementById('unlock-button');
 
-            if (!document.body.classList.contains('countdown-mode')) {
-                input.focus();
-            }
+            input.focus();
             button.addEventListener('click', unlockSite);
             input.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
@@ -2022,7 +1935,6 @@
 
         window.onload = () => {
             setViewportHeight();
-            initCountdownGate();
             initLockScreen();
             initFairyLights();
             initMemoryGallery();
