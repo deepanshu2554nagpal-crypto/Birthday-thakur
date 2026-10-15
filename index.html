@@ -978,6 +978,24 @@
             line-height: 1.5;
         }
 
+        .photo-viewer-counter {
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            z-index: 2;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(10, 10, 11, 0.62);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-weight: 500;
+        }
+
         .photo-viewer-btn {
             position: absolute;
             z-index: 2;
@@ -1282,6 +1300,13 @@
                 font-size: 0.82rem;
             }
 
+            .photo-viewer-counter {
+                top: 12px;
+                left: 12px;
+                font-size: 0.74rem;
+                padding: 4px 10px;
+            }
+
             .photo-viewer-close {
                 top: 12px;
                 right: 12px;
@@ -1533,6 +1558,51 @@
                     <p class="hover-message">Warm cafe ambiance, gentle thoughts, and timeless charm.</p>
                 </div>
             </div>
+            <!-- Memory 8 -->
+            <div class="memory-card" data-index="7" role="button" tabindex="0">
+                <div class="memory-tag">Festive Sparkle</div>
+                <div class="memory-caption">Golden Radiance</div>
+                <img src="./photo_8.jpeg" alt="Festive Sparkle" loading="lazy" decoding="async" class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">Dressed in golden hues under fairy lights, glowing brighter than all of them.</p>
+                </div>
+            </div>
+            <!-- Memory 9 -->
+            <div class="memory-card" data-index="8" role="button" tabindex="0">
+                <div class="memory-tag">Cafe Aesthetics</div>
+                <div class="memory-caption">Sweet Serenity</div>
+                <img src="./photo_9.jpeg" alt="Cafe Aesthetics" loading="lazy" decoding="async" class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">Cozy cafe corners, warm smiles, and moments that feel just like a movie.</p>
+                </div>
+            </div>
+            <!-- Memory 10 -->
+            <div class="memory-card" data-index="9" role="button" tabindex="0">
+                <div class="memory-tag">Colors Of Joy</div>
+                <div class="memory-caption">Sunshine &amp; Holi</div>
+                <img src="./photo_10.jpeg" alt="Colors Of Joy" loading="lazy" decoding="async" class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">Drenched in laughter and bright festive colors—the happiest, most carefree smile.</p>
+                </div>
+            </div>
+            <!-- Memory 11 -->
+            <div class="memory-card" data-index="10" role="button" tabindex="0">
+                <div class="memory-tag">Wanderlust</div>
+                <div class="memory-caption">Chitkul Chronicles</div>
+                <img src="./photo_11.jpeg" alt="Wanderlust Chitkul" loading="lazy" decoding="async" class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">At 11,320 ft in Chitkul, standing tall with snow-capped peaks and an adventurous heart.</p>
+                </div>
+            </div>
+            <!-- Memory 12 -->
+            <div class="memory-card" data-index="11" role="button" tabindex="0">
+                <div class="memory-tag">Proud Graduate</div>
+                <div class="memory-caption">Degree &amp; Dreams</div>
+                <img src="./photo_12.jpeg" alt="Proud Graduate" loading="lazy" decoding="async" class="memory-image">
+                <div class="memory-hover-overlay">
+                    <p class="hover-message">Walking proud in the convocation cap—celebrating hard work, brilliant dreams, and success!</p>
+                </div>
+            </div>
         </div>
         <div style="text-align: center; padding: 100px 0;">
             <button class="btn-neon" onclick="location.reload()">Replay The Magic</button>
@@ -1540,6 +1610,7 @@
     </section>
 
     <div class="photo-viewer" id="photo-viewer" aria-hidden="true">
+        <div class="photo-viewer-counter" id="photo-viewer-counter">1 / 12</div>
         <button class="photo-viewer-btn photo-viewer-close" type="button" aria-label="Close" onclick="closeMemoryViewer()">x</button>
         <button class="photo-viewer-btn photo-viewer-prev" type="button" aria-label="Previous photo" onclick="navigateMemory(-1)">&lsaquo;</button>
         <div class="photo-viewer-frame">
@@ -1772,6 +1843,36 @@
                 tag: 'Cozy Moments',
                 caption: 'Quiet Warmth',
                 hover: 'Warm cafe ambiance, gentle thoughts, and timeless charm.'
+            },
+            {
+                src: './photo_8.jpeg',
+                tag: 'Festive Sparkle',
+                caption: 'Golden Radiance',
+                hover: 'Dressed in golden hues under fairy lights, glowing brighter than all of them.'
+            },
+            {
+                src: './photo_9.jpeg',
+                tag: 'Cafe Aesthetics',
+                caption: 'Sweet Serenity',
+                hover: 'Cozy cafe corners, warm smiles, and moments that feel just like a movie.'
+            },
+            {
+                src: './photo_10.jpeg',
+                tag: 'Colors Of Joy',
+                caption: 'Sunshine & Holi',
+                hover: 'Drenched in laughter and bright festive colors—the happiest, most carefree smile.'
+            },
+            {
+                src: './photo_11.jpeg',
+                tag: 'Wanderlust',
+                caption: 'Chitkul Chronicles',
+                hover: 'At 11,320 ft in Chitkul, standing tall with snow-capped peaks and an adventurous heart.'
+            },
+            {
+                src: './photo_12.jpeg',
+                tag: 'Proud Graduate',
+                caption: 'Degree & Dreams',
+                hover: 'Walking proud in the convocation cap—celebrating hard work, brilliant dreams, and success!'
             }
         ];
         let activeMemoryIndex = 0;
@@ -1848,6 +1949,10 @@
                 caption.innerText = 'Photo could not load. Please try next.';
             };
             caption.innerText = selectedPhoto?.hover || selectedPhoto?.caption || '';
+            const counter = document.getElementById('photo-viewer-counter');
+            if (counter) {
+                counter.innerText = `${activeMemoryIndex + 1} / ${memoryPhotos.length}`;
+            }
             viewer.classList.add('active');
             viewer.setAttribute('aria-hidden', 'false');
             document.body.classList.add('viewer-open');
@@ -1881,14 +1986,39 @@
 
             renderGallery();
 
-            document.getElementById('photo-viewer').addEventListener('click', (event) => {
+            const viewerEl = document.getElementById('photo-viewer');
+            viewerEl.addEventListener('click', (event) => {
                 if (event.target.id === 'photo-viewer') {
                     closeMemoryViewer();
                 }
             });
 
+            // Touch swipe support for mobile
+            let touchStartX = 0;
+            let touchStartY = 0;
+            viewerEl.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+            viewerEl.addEventListener('touchend', (e) => {
+                if (!viewerEl.classList.contains('active')) return;
+                if (e.changedTouches.length === 1) {
+                    const diffX = e.changedTouches[0].clientX - touchStartX;
+                    const diffY = e.changedTouches[0].clientY - touchStartY;
+                    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+                        if (diffX < 0) {
+                            navigateMemory(1);
+                        } else {
+                            navigateMemory(-1);
+                        }
+                    }
+                }
+            }, { passive: true });
+
             document.addEventListener('keydown', (event) => {
-                if (!document.getElementById('photo-viewer').classList.contains('active')) {
+                if (!viewerEl.classList.contains('active')) {
                     return;
                 }
 
